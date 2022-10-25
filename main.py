@@ -49,8 +49,10 @@ def process_language_statistics_hh():
                 if predicted_salary:
                     all_salaries.append(predicted_salary)
 
-        average_salary = sum(all_salaries) // len(all_salaries)
-
+        if len(all_salaries) > 0:
+            average_salary = sum(all_salaries) // len(all_salaries)
+        else:
+            average_salary = 0
         languages_statistics[programming_language]["vacancies_found"] = json_response["found"]
         languages_statistics[programming_language]["vacancies_processed"] = len(all_salaries)
         languages_statistics[programming_language]["average_salary"] = int(average_salary)
@@ -94,9 +96,10 @@ def process_language_statistics_sj(apikey):
                     predicted_salary = predict_rub_salary(vacancy['payment_from'], vacancy['payment_to'])
                 if predicted_salary:
                     all_salaries.append(predicted_salary)
-
-        average_salary = sum(all_salaries) // len(all_salaries)
-
+        if len(all_salaries) > 0:
+            average_salary = sum(all_salaries) // len(all_salaries)
+        else:
+            average_salary = 0
         languages_statistics[programming_language]["vacancies_found"] = json_response["total"]
         languages_statistics[programming_language]["vacancies_processed"] = len(all_salaries)
         languages_statistics[programming_language]["average_salary"] = int(average_salary)
