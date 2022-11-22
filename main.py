@@ -115,8 +115,8 @@ if __name__ == "__main__":
     load_dotenv()
     apikey = os.getenv("SJ_APIKEY")
 
-    superjob = process_language_statistics_sj(apikey)
-    headhunter = process_language_statistics_hh()
+    superjob_language_statistics = process_language_statistics_sj(apikey)
+    headhunter_language_statistics = process_language_statistics_hh()
     superjob_table_payload = [['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']]
     headhunter_table_payload = [['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']]
     for language in languages:
