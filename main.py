@@ -36,12 +36,12 @@ def process_language_statistics_hh():
 
             response = requests.get("https://api.hh.ru/vacancies", params=payload)
             response.raise_for_status()
-            json_response = response.json()
+            response_results = response.json()
 
-            pages_number = json_response["pages"]
+            pages_number = response_results["pages"]
             page += 1
 
-            for vacancy in json_response["items"]:
+            for vacancy in response_results["items"]:
                 if not vacancy["salary"]:
                     predicted_salary = None
                 else:
@@ -53,7 +53,7 @@ def process_language_statistics_hh():
             average_salary = sum(all_salaries) // len(all_salaries)
         else:
             average_salary = 0
-        languages_statistics[programming_language]["vacancies_found"] = json_response["found"]
+        languages_statistics[programming_language]["vacancies_found"] = response_results["found"]
         languages_statistics[programming_language]["vacancies_processed"] = len(all_salaries)
         languages_statistics[programming_language]["average_salary"] = int(average_salary)
     return languages_statistics
@@ -84,12 +84,12 @@ def process_language_statistics_sj(apikey):
             response = requests.get("https://api.superjob.ru/2.0/vacancies/not_archive", headers=headers,
                                     params=payload)
             response.raise_for_status()
-            json_response = response.json()
+            response_results = response.json()
 
             pages_number = math.ceil(json_response["total"] / results_count)
             page += 1
 
-            for vacancy in json_response["objects"]:
+            for vacancy in response_results["objects"]:
                 if not vacancy['payment_from'] + vacancy['payment_to']:
                     predicted_salary = None
                 else:
@@ -100,7 +100,7 @@ def process_language_statistics_sj(apikey):
             average_salary = sum(all_salaries) // len(all_salaries)
         else:
             average_salary = 0
-        languages_statistics[programming_language]["vacancies_found"] = json_response["total"]
+        languages_statistics[programming_language]["vacancies_found"] = response_results["total"]
         languages_statistics[programming_language]["vacancies_processed"] = len(all_salaries)
         languages_statistics[programming_language]["average_salary"] = int(average_salary)
     return languages_statistics
@@ -121,11 +121,11 @@ if __name__ == "__main__":
     headhunter_table_payload = [['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']]
     for language in languages:
         superjob_table_payload.append(
-            [language, superjob[language]["vacancies_found"], superjob[language]["vacancies_processed"],
-             superjob[language]["average_salary"]])
+            [language, superjob_language_statistics[language]["vacancies_found"], superjob_language_statistics[language]["vacancies_processed"],
+             superjob_language_statistics[language]["average_salary"]])
         headhunter_table_payload.append(
-            [language, headhunter[language]["vacancies_found"], headhunter[language]["vacancies_processed"],
-             headhunter[language]["average_salary"]])
+            [language, headhunter_language_statistics[language]["vacancies_found"], headhunter_language_statistics[language]["vacancies_processed"],
+             headhunter_language_statistics[language]["average_salary"]])
 
     print(create_table("Headhunter", headhunter_table_payload))
     print(create_table("SuperJob", superjob_table_payload))
