@@ -49,7 +49,7 @@ def process_language_statistics_hh():
                 if predicted_salary:
                     all_salaries.append(predicted_salary)
 
-        if len(all_salaries) > 0:
+        if all_salaries:
             average_salary = sum(all_salaries) // len(all_salaries)
         else:
             average_salary = 0
@@ -96,7 +96,7 @@ def process_language_statistics_sj(apikey):
                     predicted_salary = predict_rub_salary(vacancy['payment_from'], vacancy['payment_to'])
                 if predicted_salary:
                     all_salaries.append(predicted_salary)
-        if len(all_salaries) > 0:
+        if all_salaries:
             average_salary = sum(all_salaries) // len(all_salaries)
         else:
             average_salary = 0
