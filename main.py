@@ -21,7 +21,7 @@ def process_language_statistics_hh():
     for programming_language in languages:
         languages_statistics[programming_language] = {}
 
-        json_response = {}
+        response_results = {}
 
         all_salaries = []
         page = 0
@@ -64,7 +64,7 @@ def process_language_statistics_sj(apikey):
     for programming_language in languages:
         languages_statistics[programming_language] = {}
 
-        json_response = {}
+        response_results = {}
 
         all_salaries = []
         page = 0
